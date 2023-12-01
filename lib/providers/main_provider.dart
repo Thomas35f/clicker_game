@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+// Chaque recette est une instance de cette classe
 class Recipe {
   String name;
   String description;
@@ -30,26 +31,40 @@ class MainProvider extends ChangeNotifier {
       notifyListeners();
     });
 
-    // Utilisation d'un Timer pour appeler addRessource périodiquement
+    // Le mineur récolte 3 cuivres et 3 fers toutes les secondes
     Timer.periodic(Duration(milliseconds: 333), (Timer timer) {
-      // Vérifier si la recette "Hache" a un count égal à 1
-      Recipe hacheRecipe =
-          recipes.firstWhere((recipe) => recipe.name == 'Hache');
-      if (hacheRecipe.count == 1) {
-        addRessource(0);
-        addRessource(0);
-        addRessource(0);
+      Recipe mineurRecipe =
+          recipes.firstWhere((recipe) => recipe.name == 'Mineur');
+      if (mineurRecipe.count == 1) {
+        addRessource(1);
+        addRessource(2);
       }
     });
 
-    // Création de recettes toutes les secondes
+    // Création de 2 recettes toutes les secondes
     Timer.periodic(Duration(milliseconds: 1000), (Timer timer) {
-      // Vérifier si la recette "Hache" a un count égal à 1
-      Recipe hacheRecipe =
+      Recipe fonderieRecipe =
           recipes.firstWhere((recipe) => recipe.name == 'Fonderie');
-      if (hacheRecipe.count == 1) {
+      if (fonderieRecipe.count == 1) {
         createRecipe(2);
         createRecipe(4);
+      }
+    });
+
+    // Le dieu mineur
+    Timer.periodic(Duration(milliseconds: 1000), (Timer timer) {
+      Recipe dieuMineurRecipe =
+          recipes.firstWhere((recipe) => recipe.name == 'Dieu mineur');
+      if (dieuMineurRecipe.count == 1) {
+        for (int i = 1; i < 10; i++) {
+          addRessource(0);
+        }
+        for (int i = 1; i < 10; i++) {
+          addRessource(1);
+        }
+        for (int i = 1; i < 10; i++) {
+          addRessource(2);
+        }
       }
     });
   }
@@ -90,7 +105,8 @@ class MainProvider extends ChangeNotifier {
         cost: {'Lingot de fer': 1}),
     Recipe(
         name: 'Fil electrique',
-        description: 'un gros fil électrique',
+        description:
+            'Un fil électrique pour fabriquer des composantsélectroniques',
         cost: {'Lingot de cuivre': 1}),
     Recipe(
         name: 'Mineur',
@@ -98,8 +114,17 @@ class MainProvider extends ChangeNotifier {
         cost: {'Plaque de fer': 10, 'Fil electrique': 5}),
     Recipe(
         name: 'Fonderie',
-        description: 'Pour aller plus vite',
+        description: 'Un bâtiment qui permet d’automatiser la production.',
         cost: {'Fil electrique': 5, 'Tige en metal': 8}),
+    Recipe(
+        name: 'Dieu mineur',
+        description: 'Il est pas là pour rigoler lui...',
+        cost: {
+          'Lingot de fer': 50,
+          'Lingot de cuivre': 50,
+          'Fil electrique': 50,
+          'Tige en metal': 50,
+        }),
   ];
 
   // Ajout d'une ressource à son compteur
@@ -197,22 +222,47 @@ class MainProvider extends ChangeNotifier {
 
       recipe.count++;
 
-      // On vérifie si on peut recréer la même recette
-      //    recipe.cost.forEach((resource, amount) {
-      //   switch (resource) {
-      //     case 'bois':
-      //       if (boisCounter < amount) canProduce = false;
-      //       break;
-      //     case 'fer':
-      //       if (ferCounter < amount) canProduce = false;
-      //       break;
-      //     case 'cuivre':
-      //       if (cuivreCounter < amount) canProduce = false;
-      //       break;
-      //   }
-      // });
-
       notifyListeners();
     }
+  }
+
+  // Pour montrer que le bouton "Produire" des recettes est disabled si les ressources ne sont pas nécessaires
+  bool canProduceRecipe(int index) {
+    Recipe recipe = recipes[index];
+    bool canProduce = true;
+
+    recipe.cost.forEach((resource, amount) {
+      switch (resource) {
+        case 'bois':
+          if (boisCounter < amount) canProduce = false;
+          break;
+        case 'fer':
+          if (ferCounter < amount) canProduce = false;
+          break;
+        case 'cuivre':
+          if (cuivreCounter < amount) canProduce = false;
+          break;
+        case 'charbon':
+          if (charbonCounter < amount) canProduce = false;
+          break;
+        case 'Lingot de fer':
+          if (recipes[2].count < amount) canProduce = false;
+          break;
+        case 'Lingot de cuivre':
+          if (recipes[4].count < amount) canProduce = false;
+          break;
+        case 'Plaque de fer':
+          if (recipes[3].count < amount) canProduce = false;
+          break;
+        case 'Fil electrique':
+          if (recipes[6].count < amount) canProduce = false;
+          break;
+        case 'Tige en metal':
+          if (recipes[5].count < amount) canProduce = false;
+          break;
+      }
+    });
+
+    return canProduce;
   }
 }

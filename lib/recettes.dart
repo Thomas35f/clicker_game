@@ -73,6 +73,11 @@ class _Recettes extends State<Recettes> {
                       createRecipe(index);
                     },
                     child: Text('Produire'),
+                    style: ElevatedButton.styleFrom(
+                      primary: mainProvider.canProduceRecipe(index)
+                          ? null
+                          : Colors.grey,
+                    ),
                   ),
                 ),
               );

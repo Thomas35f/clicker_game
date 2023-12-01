@@ -116,21 +116,21 @@ class Ressource extends StatelessWidget {
 
     switch (index) {
       case 0:
-        color = Colors.brown;
+        color = Color(0xFF967969);
         resourceName = 'Bois';
         break;
       case 1:
-        color = Colors.grey;
+        color = Color(0xFFCED4DA);
         resourceName = 'Fer';
         break;
       case 2:
-        color = Colors.orange;
+        color = Color(0xFFD9480F);
         resourceName = 'Cuivre';
         break;
       case 3:
         if (mainProvider.recipes[2].count >= 1000 &&
             mainProvider.recipes[3].count >= 1000) {
-          color = Colors.grey;
+          color = Color(0xFF000000);
           resourceName = 'Charbon';
         } else {
           return Container();
