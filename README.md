@@ -5,12 +5,13 @@ flutter run
 ```
 
 ## Références / Ressources
+- Les modules faits pendant le cours > Réutilisation de widgets
 - https://codelabs.developers.google.com/codelabs/flutter-codelab-first?hl=fr#4 > Le codelab m'a servi pour me remémorer l'organisation générale des widgets
 - https://api.flutter.dev/flutter/widgets/widgets-library.html > La doc de Flutter concernant ses widgets
 - https://github.com/Thomas35f/e_commerce_app > Un projet fait l'an dernier en flutter. C'est une application e-commerce
 - https://chat.openai.com/ > Pour résoudre les bugs que je rencontrais
 
-## Choix de design / implémenation
+## Choix de design / implémentation
 - Chaque page a son fichier dédié. Les Stateless et Statefull sont utilisés en fonction de si le widget contient des éléments du provider.
 - Le fichier main.dart appelle la homepage.
 - J'ai commencé le projet en implémentant un MultiProvider en pensant mettre plusieurs providers (un pour les ressources et un pour les recettes). Finalement, comme les 2 sont très liés, j'ai tout concentré dans un seul fichier en essayant de bien séparer les éléments. Le fichier main_provider.dart est donc le point central de l'appli qui gère les initialisations des ressources et des recettes.
