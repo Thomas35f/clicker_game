@@ -226,7 +226,7 @@ class MainProvider extends ChangeNotifier {
     }
   }
 
-  // Pour montrer que le bouton "Produire" des recettes est disabled si les ressources ne sont pas nécessaires
+  // renvoie un bool pour voir si le bouton "Produire" des recettes est disabled si les ressources ne sont pas assez
   bool canProduceRecipe(int index) {
     Recipe recipe = recipes[index];
     bool canProduce = true;

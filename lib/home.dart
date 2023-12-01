@@ -129,7 +129,7 @@ class Ressource extends StatelessWidget {
         break;
       case 3:
         if (mainProvider.recipes[2].count >= 1000 &&
-            mainProvider.recipes[3].count >= 1000) {
+            mainProvider.recipes[4].count >= 1000) {
           color = Color(0xFF000000);
           resourceName = 'Charbon';
         } else {
